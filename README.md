@@ -1,3 +1,72 @@
+# CbAS Optimizer for MetaBox
+## 项目介绍 | Introduction
+我为MetaBox框架添加了CbAS（Conditioning by Adaptive Sampling）优化算法的实现。CbAS是一种基于变分自编码器和重要性采样的优化算法，特别适用于复杂设计空间的探索。
+I've added a CbAS (Conditioning by Adaptive Sampling) optimizer implementation to the MetaBox framework. CbAS is an optimization algorithm based on variational autoencoders and importance sampling, particularly suitable for exploring complex design spaces.
+
+相关文献(related paper): [ICML 2019 paper 'Conditioning by adaptive sampling for robust design'](https://arxiv.org/abs/1901.10060)
+
+## 实现位置 | Implementation Location
+代码位于：`MetaBox/src/optimizer/cbas_optimizer.py`
+
+## 注意 | Attention
+为了将CbAS算法应用于metabox框架，本模型做了如下改动：
+- 移除预测模型，使用metabox 自带的 promblem.eval()
+- 先验概率模型(prior_vae)用抽样得到的 200000个数据中的前得分前25%的输入x训练
+- 每次将阙值与新的25分位数比较，替换为小的那个,以此来表示越来越严格的条件
+- 因为没有预测模型，所以直接将采样得到的y与 阙值对比，用0/1变量表示，以此代表论文中提到的$P(S|x)$
+由于对深度学习模型vae的依赖，模型的运行时间会显著高于其他模型
+## 效果展示 | Demonstration
+在处理problem bbob --dim 10 --difficulty easy问题上，**模型的得分为1-3左右**
+如果**转化为 ln cost 则为 0 - 1左右**
+**明显好于模型Random_search 和 DEAP_CMAES，但是明显弱于GL_PSO**
+
+![image-20250406164738310](README.assets/image-20250406164738310.png)
+
+![image-20250406164836874](README.assets/image-20250406164836874.png)
+
+## 代码结构 | Code Structure
+```
+cbas_optimizer.py
+│
+├── VAE(nn.Module)               
+│   ├── __init__                   
+│   ├── encode                       
+│   ├── decode                    
+│   ├── reparameterize              
+│   ├── forward                   
+│   ├── sample                      
+│   ├── log_prob                     
+│   ├── train_model               
+│   └── copy_weights_from          
+│
+└── CbAS_Optimizer(Basic_Optimizer) 
+    ├── __init__                    
+    └── run_episode                  
+```
+
+
+## 使用示例 | Usage examples
+```shell
+python main.py --test --problem bbob --difficulty easy --optimizer CbAS_Optimizer --t_optimizer_for_cp DEAP_CMAES Random_search
+
+python main.py --test --problem bbob --difficulty easy --optimizer CbAS_Optimizer --cbas_latent_dim 64 --cbas_percentile 90.0 --cbas_hidden_dim 512
+```
+
+CbAS优化器的可选参数：
+- `--cbas_latent_dim`: VAE潜变量维度，默认值32
+- `--cbas_hidden_dim`: 神经网络隐藏层维度，默认值256
+- `--cbas_num_layers`: 神经网络层数，默认值1
+- `--cbas_percentile`: 用于计算阈值的百分位数，默认值25
+- `--cbas_num_models`: 集成模型数量，默认值5
+- `--cbas_vae_epochs`: VAE训练轮数，默认值10
+- `--cbas_ensemble_epochs`: 集成模型训练轮数，默认值100
+- `--cbas_batch_size`: 批处理大小，默认值100
+- `--cbas_samples_per_iter`: 每次迭代的采样数，维度<=10时默认为$100\times dim$，否则为$200\times dim$
+
+
+
+---
+
 # MetaBox: A Benchmark Platform for Meta-Black-Box Optimization with Reinforcement Learning
 
 [![NeurIPS](https://img.shields.io/badge/NeurIPS-2023-b31b1b.svg)]([https://proceedings.neurips.cc/paper_files/paper/2023/hash/232eee8ef411a0a316efa298d7be3c2b-Abstract-Datasets_and_Benchmarks.html]) **MetaBox has been published at NeurIPS 2023！**
@@ -163,6 +232,6 @@ In a bid to illustrate the utility of MetaBox for facilitating rigorous evaluati
 
 
 ## Acknowledgements
- 
+
 The code and the framework are based on the repos [DEAP](https://github.com/DEAP/deap), [coco](https://github.com/numbbo/coco) and [Protein-protein docking V4.0](https://zlab.umassmed.edu/benchmark/).
 

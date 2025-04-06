@@ -40,6 +40,7 @@ from optimizer import (
     LES_Optimizer,
     NRLPSO_Optimizer,
     Symbol_Optimizer,
+    CbAS_Optimizer,
 
     DEAP_DE,
     JDE21,
