@@ -20,9 +20,8 @@ I've added a CbAS (Conditioning by Adaptive Sampling) optimizer implementation t
 如果**转化为 ln cost 则为 0 - 1左右**
 **明显好于模型Random_search 和 DEAP_CMAES，但是明显弱于GL_PSO**
 
-![image-20250406164738310](README.assets/image-20250406164738310.png)
-
-![image-20250406164836874](README.assets/image-20250406164836874.png)
+![image](https://github.com/user-attachments/assets/f077e868-e1ec-49f0-9b72-e388757d241e)
+![image](https://github.com/user-attachments/assets/ad05df1c-234d-4816-8290-c348009e7a91)
 
 ## 代码结构 | Code Structure
 ```
