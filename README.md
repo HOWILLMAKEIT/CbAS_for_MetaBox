@@ -21,7 +21,7 @@ I've added a CbAS (Conditioning by Adaptive Sampling) optimizer implementation t
 **明显好于模型Random_search 和 DEAP_CMAES，但是明显弱于GL_PSO**
 
 ![image](https://github.com/user-attachments/assets/f077e868-e1ec-49f0-9b72-e388757d241e)
-![image](https://github.com/user-attachments/assets/895c171a-3dce-412b-91ae-257462ddfdad)
+![image](https://github.com/user-attachments/assets/ad05df1c-234d-4816-8290-c348009e7a91)
 
 ## 代码结构 | Code Structure
 ```
