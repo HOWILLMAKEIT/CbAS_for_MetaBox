@@ -34,7 +34,7 @@ cbas_optimizer.py
 │   ├── decode                    
 │   ├── reparameterize              
 │   ├── forward                   
-│   ├── sample                      
+│   ├── sample_from_z                      
 │   ├── log_prob                     
 │   ├── train_model               
 │   └── copy_weights_from          
