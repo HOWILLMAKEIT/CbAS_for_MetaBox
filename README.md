@@ -18,13 +18,14 @@ I've added a CbAS (Conditioning by Adaptive Sampling) optimizer implementation t
 ## 效果展示 | Demonstration
 在2维度的sphere问题上，ln cost 在负7到负9之间，**强于Random_search** 
 略微弱于DEAP_CMAES. 明显弱于 GL_PSO
-![[Pasted image 20250406173554.png]]
+![image](https://github.com/user-attachments/assets/5a1d1c81-9603-473d-b0ca-aad6c2ca9f23)
+
 
 在10维度的sphere问题上的分数ln cost大约在0-1之间
 弱于DEAP_CMAES 弱于 GL_PSO
-![[Pasted image 20250406170637.png]]
-![[Pasted image 20250406170633.png]]
-![[Pasted image 20250406173100.png]]
+![image](https://github.com/user-attachments/assets/30e0efbc-cc8b-4e7c-9759-0310fae84aa2)
+![image](https://github.com/user-attachments/assets/72d2821c-698b-469a-ab42-70e0c6d6efeb)
+![image](https://github.com/user-attachments/assets/b11b9630-d7a0-47ca-a9e8-0c3a02a00351)
 由于运行时间问题，对其他问题上的跑分还未进行测试
 ## 代码结构 | Code Structure
 ```
