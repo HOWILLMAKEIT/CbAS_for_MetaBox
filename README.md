@@ -16,13 +16,16 @@ I've added a CbAS (Conditioning by Adaptive Sampling) optimizer implementation t
 - 因为没有预测模型，所以直接将采样得到的y与 阙值对比，用0/1变量表示，以此代表论文中提到的$P(S|x)$
 由于对深度学习模型vae的依赖，模型的运行时间会显著高于其他模型
 ## 效果展示 | Demonstration
-在处理problem bbob --dim 10 --difficulty easy问题上，**模型的得分为1-3左右**
-如果**转化为 ln cost 则为 0 - 1左右**
-**明显好于模型Random_search 和 DEAP_CMAES，但是明显弱于GL_PSO**
+在2维度的sphere问题上，ln cost 在负7到负9之间，**强于Random_search** 
+略微弱于DEAP_CMAES. 明显弱于 GL_PSO
+![[Pasted image 20250406173554.png]]
 
-![image](https://github.com/user-attachments/assets/f077e868-e1ec-49f0-9b72-e388757d241e)
-![image](https://github.com/user-attachments/assets/ad05df1c-234d-4816-8290-c348009e7a91)
-
+在10维度的sphere问题上的分数ln cost大约在0-1之间
+弱于DEAP_CMAES 弱于 GL_PSO
+![[Pasted image 20250406170637.png]]
+![[Pasted image 20250406170633.png]]
+![[Pasted image 20250406173100.png]]
+由于运行时间问题，对其他问题上的跑分还未进行测试
 ## 代码结构 | Code Structure
 ```
 cbas_optimizer.py
